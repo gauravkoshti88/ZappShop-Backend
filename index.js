@@ -19,7 +19,12 @@ let port = process.env.PORT || 7000;
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:["http://localhost:5173" , "http://localhost:5174"],
+    origin:[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://gauravkoshti88.github.io/zappshop-e-commerce/",
+        "https://gauravkoshti88.github.io/zappshop-admin/"
+    ],
     credentials:true
 }))
 
