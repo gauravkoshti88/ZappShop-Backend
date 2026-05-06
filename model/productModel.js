@@ -1,56 +1,34 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose, { Schema } from "mongoose";
 
 const productSchema = new Schema({
-    name:{
-        type:String,
-        required:true
-    },
-    image1:{
-        type:String,
-        required:true
-    },
-    image2:{
-        type:String,
-        required:true
-    },    
-    image3:{
-        type:String,
-        required:true
-    },
-    image4:{
-        type:String,
-        required:true
-    },
-    description:{
-        type:String,
-        required:true
-    },
-    price:{
-        type:String,
-        required:true
-    },
-    category:{
-        type:String,
-        required:true
-    },
-    subCategory:{
-        type:String,
-        required:true
-    },
-    sizes:{
-        type:Array,
-        required:true
-    },
-    date:{
-        type:Number,
-        required:true
-    },
-    bestseller:{
-        type:Boolean,
-        required:true
-    }
-},{timestamps:true})
+  name: { type: String, required: true },
 
-const Product = mongoose.model("Product",productSchema);
+  image1: {
+    url: { type: String, required: true },       // Cloudinary secure_url
+    public_id: { type: String, required: true }  // Cloudinary public_id
+  },
+  image2: {
+    url: { type: String, required: true },
+    public_id: { type: String, required: true }
+  },
+  image3: {
+    url: { type: String, required: true },
+    public_id: { type: String, required: true }
+  },
+  image4: {
+    url: { type: String, required: true },
+    public_id: { type: String, required: true }
+  },
 
-export default Product
+  description: { type: String, required: true },
+  price: { type: String, required: true },
+  category: { type: String, required: true },
+  subCategory: { type: String, required: true },
+  sizes: { type: Array, required: true },
+  date: { type: Number, required: true },
+  bestseller: { type: Boolean, required: true }
+}, { timestamps: true });
+
+const Product = mongoose.model("Product", productSchema);
+
+export default Product;
