@@ -119,6 +119,7 @@ export const logout = async(req, res)=>{
 export const googleLogin = async (req, res) =>{
     try {
         let {name, email} = req.body;
+        
         let user = await User.findOne({email});
 
         if(!user){
@@ -139,8 +140,6 @@ export const googleLogin = async (req, res) =>{
             user
         })
     } catch (error) {
-        console.log("Google Login Error",error);
-        
         return res.status(500).json({
             message:"Google Login Error",error
         })   
