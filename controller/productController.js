@@ -1,5 +1,6 @@
 import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js";
 import Product from "../model/productModel.js";
+import redisClient from "../config/redis.js";
 
 export const addProduct = async (req, res) => {
   try {
@@ -31,7 +32,7 @@ export const addProduct = async (req, res) => {
     };
 
     const product = await Product.create(productData);
-    
+
     return res.status(201).json(product);
   } catch (error) {
     console.log("Add Product Error", error);
@@ -43,22 +44,29 @@ export const addProduct = async (req, res) => {
 };
 
 export const listProduct = async (req, res) => {
-    try {
-        let list = await Product.find({});
-        if (!list) {
-            return res.status(400).json({
-                message: "Product List is Empty"
-            })
-        }
-
-        return res.status(200).json(list);
-    } catch (error) {
-        console.log("List Product Error", error)
-        return res.status(500).json({
-            message: "List Product Error",
-            error
-        })
+  try {
+    const cacheData = await redisClient.get("productList");
+    if (cacheData) {
+      console.log("Serving from Redis Cache");
+      return res.status(200).json(JSON.parse(cacheData));
     }
+    let list = await Product.find({});
+    if (!list) {
+      return res.status(400).json({
+        message: "Product List is Empty"
+      })
+    }
+
+    await redisClient.setEx("productList",60, JSON.stringify(list));
+
+    return res.status(200).json(list);
+  } catch (error) {
+    console.log("List Product Error", error)
+    return res.status(500).json({
+      message: "List Product Error",
+      error
+    })
+  }
 }
 
 

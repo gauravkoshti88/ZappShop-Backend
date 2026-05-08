@@ -10,10 +10,17 @@ import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import helmet from 'helmet';
+import redisClient from './config/redis.js';
+
 
 dotenv.config();
 
 const app = express();
+
+redisClient.on("connect", ()=> {
+    console.log("Redis connected successfully");
+    
+})
 
 let port = process.env.PORT || 7000;
 
