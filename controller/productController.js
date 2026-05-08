@@ -5,7 +5,6 @@ export const addProduct = async (req, res) => {
   try {
     let { name, description, price, category, subCategory, sizes, bestseller } = req.body;
 
-    // Upload each image buffer and get both url + public_id
     const img1 = await uploadOnCloudinary(req.files.image1[0].buffer, "products");
     const img2 = await uploadOnCloudinary(req.files.image2[0].buffer, "products");
     const img3 = await uploadOnCloudinary(req.files.image3[0].buffer, "products");
@@ -21,11 +20,10 @@ export const addProduct = async (req, res) => {
       price: Number(price),
       category,
       subCategory,
-      sizes: JSON.parse(sizes),
-      bestseller: bestseller === "true",
+      sizes: sizes ? JSON.parse(sizes) : [],
+      bestseller: bestseller ? JSON.parse(bestseller) : false,
       date: Date.now(),
 
-      // Save both secure_url + public_id in DB
       image1: { url: img1.secure_url, public_id: img1.public_id },
       image2: { url: img2.secure_url, public_id: img2.public_id },
       image3: { url: img3.secure_url, public_id: img3.public_id },
@@ -33,6 +31,7 @@ export const addProduct = async (req, res) => {
     };
 
     const product = await Product.create(productData);
+    
     return res.status(201).json(product);
   } catch (error) {
     console.log("Add Product Error", error);
@@ -71,7 +70,6 @@ export const removeProduct = async (req, res) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
-    // Step 2: Delete images safely (check if public_id exists)
     const images = [product.image1, product.image2, product.image3, product.image4];
     for (const img of images) {
       if (img?.public_id) {
