@@ -88,7 +88,7 @@ export const login = async (req, res) => {
         const safeUser = newUser.toObject();
         delete safeUser.password;
 
-        return res.status(201).json({ message: "User registered successfully", user: safeUser });
+        return res.status(200).json({ message: "User login successfully", user: safeUser });
     } catch (error) {
         console.log("Login Error", error);
 
