@@ -57,7 +57,7 @@ export const listProduct = async (req, res) => {
       })
     }
 
-    await redisClient.setEx("productList",60, JSON.stringify(list));
+    await redisClient.setEx("productList",1800, JSON.stringify(list));
 
     return res.status(200).json(list);
   } catch (error) {
@@ -85,8 +85,8 @@ export const removeProduct = async (req, res) => {
       }
     }
 
-    // Step 3: Delete product from DB
     await product.deleteOne();
+    await redisClient.del("productList")
 
     return res.status(200).json({ success: true, message: "Product and images deleted" });
   } catch (error) {

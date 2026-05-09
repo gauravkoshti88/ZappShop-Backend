@@ -19,7 +19,6 @@ const app = express();
 
 redisClient.on("connect", ()=> {
     console.log("Redis connected successfully");
-    
 })
 
 let port = process.env.PORT || 7000;
