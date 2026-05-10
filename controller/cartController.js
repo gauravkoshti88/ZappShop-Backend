@@ -13,8 +13,6 @@ export const addToCart = async(req, res)=>{
             })
         }
 
-        // Ensure cartData is initialized
-
         let cartData = userData.cartData || {};
 
         if(cartData[itemId]){
@@ -31,7 +29,6 @@ export const addToCart = async(req, res)=>{
         await User.findByIdAndUpdate(req.userId, {cartData});
         return res.status(201).json({message: "Added to cart"});
     } catch (error) {
-        console.log("Add to Cart Error",error);
         return res.status(500).json({message: "addToCart Error", error})
     }
 }
@@ -48,7 +45,6 @@ export const updateCart = async (req, res)=>{
 
         return res.status(201).json({message: "cart updated"})
     } catch (error) {
-        console.log("updateCart Error",error);
         return res.status(500).json({
             message:"updateCart Error",
             error
@@ -63,7 +59,6 @@ export const getUserCart = async (req,res)=>{
 
         return res.status(200).json(cartData)
     } catch (error) {
-        console.log(error);
         return res.status(500).json({message:"getUsrCart Error",error})
     }
 }

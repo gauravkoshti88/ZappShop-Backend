@@ -4,8 +4,8 @@ const productSchema = new Schema({
   name: { type: String, required: true },
 
   image1: {
-    url: { type: String, required: true },       // Cloudinary secure_url
-    public_id: { type: String, required: true }  // Cloudinary public_id
+    url: { type: String, required: true },    
+    public_id: { type: String, required: true } 
   },
   image2: {
     url: { type: String, required: true },

@@ -35,7 +35,6 @@ export const addProduct = async (req, res) => {
 
     return res.status(201).json(product);
   } catch (error) {
-    console.log("Add Product Error", error);
     return res.status(500).json({
       message: "Add Product Error",
       error
@@ -47,7 +46,6 @@ export const listProduct = async (req, res) => {
   try {
     const cacheData = await redisClient.get("productList");
     if (cacheData) {
-      console.log("Serving from Redis Cache");
       return res.status(200).json(JSON.parse(cacheData));
     }
     let list = await Product.find({});
@@ -61,7 +59,6 @@ export const listProduct = async (req, res) => {
 
     return res.status(200).json(list);
   } catch (error) {
-    console.log("List Product Error", error)
     return res.status(500).json({
       message: "List Product Error",
       error
@@ -90,7 +87,6 @@ export const removeProduct = async (req, res) => {
 
     return res.status(200).json({ success: true, message: "Product and images deleted" });
   } catch (error) {
-    console.error("Remove Product Error", error);
     return res.status(500).json({
       success: false,
       message: "Remove Product Error",

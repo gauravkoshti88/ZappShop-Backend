@@ -17,7 +17,7 @@ dotenv.config();
 
 const app = express();
 
-redisClient.on("connect", ()=> {
+redisClient.on("connect", () => {
     console.log("Redis connected successfully");
 })
 
@@ -28,23 +28,25 @@ app.use(cookieParser())
 app.use(helmet());
 
 app.use(cors({
-    origin:[
+    origin: [
         "http://localhost:5173",
         "http://localhost:5174",
         "https://gauravkoshti88.github.io"
     ],
-    credentials:true
+    credentials: true
 }))
 
 app.use('/api', authRoutes)
-app.use('/user',userRoutes)
-app.use('/admin',adminRoutes)
-app.use('/product',productRoutes)
-app.use("/cart",cartRoutes);
-app.use("/order",orderRoutes);
+app.use('/user', userRoutes)
+app.use('/admin', adminRoutes)
+app.use('/product', productRoutes)
+app.use("/cart", cartRoutes);
+app.use("/order", orderRoutes);
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     dbConnect();
-    console.log(`server is running on http://localhost:${port}`)
+    if (process.env.NODE_ENV === "development") {
+        console.log(`server is running on http://localhost:${port}`)
+    }
 })
 

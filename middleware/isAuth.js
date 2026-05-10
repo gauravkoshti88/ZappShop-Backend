@@ -23,8 +23,6 @@ import jwt from 'jsonwebtoken'
         next();
 
     } catch (error) {
-        console.log("isAuth Error");
-        
         return res.status(500).json({
             message:"Authentication Error"
         })

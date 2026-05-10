@@ -128,15 +128,36 @@ export const allOrders = async(req, res)=>{
     }
 }
 
-export const updateStatus = async (req,res) => {
-    try {
-        const {orderId, status} = req.body
+export const updateStatus = async (req, res) => {
+  try {
+    const { orderId, status } = req.body;
 
-        let updated = await Order.findByIdAndUpdate(orderId,{status})
-        return res.status(201).json({message:"Status Updated",updated})
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({message:error.message})
+    // Find order first
+    let order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
     }
-}
+
+    // Update status
+    order.status = status;
+
+    // Agar Delivered hai to payment true kar do
+    if (status === "Delivered") {
+      order.payment = true; // payment flag true
+    }
+
+    await order.save();
+
+    return res.status(201).json({
+      message: "Status Updated",
+      updated: order,
+      paymentMethod: order.paymentMethod // response mein paymentMethod bhej do
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 
