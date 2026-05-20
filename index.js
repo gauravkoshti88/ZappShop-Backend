@@ -32,7 +32,8 @@ app.use(cors({
         "http://localhost:5173",
         "http://localhost:5174",
         "https://gauravkoshti88.github.io",
-        "https://zappshop-ecommerce.vercel.app"
+        "https://zappshop-ecommerce.vercel.app",
+        "https://zappshop-admin.vercel.app"
     ],
     credentials: true
 }))
