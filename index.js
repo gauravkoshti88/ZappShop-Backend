@@ -31,7 +31,8 @@ app.use(cors({
     origin: [
         "http://localhost:5173",
         "http://localhost:5174",
-        "https://gauravkoshti88.github.io"
+        "https://gauravkoshti88.github.io",
+        "https://zappshop-ecommerce.vercel.app"
     ],
     credentials: true
 }))
